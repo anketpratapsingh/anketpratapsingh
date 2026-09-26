@@ -240,9 +240,21 @@ A coupon lifecycle platform for telecom marketing campaigns, covering the full j
 >
 > Repos: [travsr](https://github.com/Travsr-com/travsr) (core engine, CLI, daemon, MCP, VS Code) · [travsr-embed](https://github.com/Travsr-com/travsr-embed) (embedding sidecar) · [travsr-lang](https://github.com/Travsr-com/travsr-lang) (language plugins)
 
-**The problem.** AI coding agents usually understand a codebase by splitting it into text chunks and searching for the ones that look similar to the question. That is why they name files that merely *look* related instead of the code that actually calls a function, miss callers that live three modules away, and burn thousands of tokens reading files they did not need.
+**What Travsr is doing.** Travsr is building code intelligence that is grounded in the repository itself, not in guesses about it. The idea comes from migratory birds, which cross 10,000 kilometres without a wrong turn because they follow a map rather than instinct. Travsr gives AI coding agents that same map of a codebase: a live graph of every call, import, and reference that lives next to git and updates on every save and commit.
 
-**What Travsr does.** Travsr treats source code as what it really is: a graph. It indexes a repository into real call, import, and reference edges, using Tree-sitter for fast structural parsing and sandboxed SCIP/LSIF analyzers for deep, compiler-accurate semantics. A git hook and a file watcher keep the graph fresh on every save and commit. The graph is served over the **Model Context Protocol (MCP)**, so Claude Code, Cursor, GitHub Copilot, Codex, and Gemini CLI can answer *"who calls PaymentService.charge?"* by following real edges, with far fewer tokens and no invented dependencies. It is open source (Apache-2.0), runs entirely on the developer's machine, exposes 26 MCP tools, and supports 14 language groups.
+**The problem it solves.** AI coding agents usually understand a codebase by splitting it into text chunks and searching for the ones that look similar to the question. That is why they name files that merely *look* related instead of the code that actually calls a function, miss callers that live three modules away, and burn thousands of tokens reading files they did not need.
+
+**How it works.** Travsr indexes a repository into real call, import, and reference edges, using Tree-sitter for fast structural parsing and sandboxed SCIP/LSIF analyzers for deep, compiler-accurate semantics. The graph is served over the **Model Context Protocol (MCP)**, so any MCP-capable assistant can follow real edges instead of guessing. It ships as a CLI, a background daemon, an MCP server with 26 tools, a VS Code extension, an embedding sidecar, and per-language plugins.
+
+**Why developers use Travsr:**
+- 🎯 **Answers from real edges, not look-alike text**: Ask "who calls PaymentService.charge?" and get the actual callers with file and line, not files that merely read similarly.
+- 💸 **Far fewer tokens**: Agents receive focused symbols and snippets within a token budget instead of reading whole files, for example two callers found in about 1,100 tokens.
+- 🔄 **Always fresh**: A background daemon watches saved files and git hooks reconcile commits, merges, and branch checkouts, so the graph tracks HEAD rather than the last rebuild.
+- 🔒 **Local and private**: The graph is a SQLite file inside your repository. Nothing leaves the machine unless you opt in, and the core is open source under Apache-2.0.
+- 🧭 **Understand a change before you make it**: Check the blast radius of a file, trace dependencies, and follow execution paths before editing, not after something breaks.
+- 🧩 **Works with the tools you already use**: `travsr init` detects Claude Code, Cursor, VS Code Copilot, Codex, Gemini CLI, Windsurf, Zed, and Antigravity and configures MCP for them. The VS Code extension adds CodeLens callers and a visual graph.
+- 🗂️ **Multi-repository by design**: Register every repository once and query them all through a single MCP server, scoping requests to one repo when you want focused answers.
+- 🌐 **Broad language coverage**: Tree-sitter parses 14 language groups plus JSON, YAML, TOML, XML, and Markdown. Deeper semantic analysis and optional local embeddings are added when you need them.
 
 **My role.** I contribute across all three repositories (core engine, embedding sidecar, language plugins) and the VS Code extension, mainly in Rust and TypeScript. I take on the hard, unglamorous problems that decide whether a local-first developer tool can be trusted: Windows-only bugs, unbounded memory, sandbox security gaps, and graph answers that look right but are quietly wrong.
 
