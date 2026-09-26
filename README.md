@@ -266,15 +266,6 @@ A coupon lifecycle platform for telecom marketing campaigns, covering the full j
 
 ---
 
-### 💻 ATM Terminal System *(Personal Project)*
-> Core Java · OOP · CLI Application
-
-A terminal-based ATM simulation built to solidify Java OOP foundations before entering the industry — account creation, deposit, withdrawal, balance enquiry, and transaction history using clean object-oriented design patterns.
-
-**Stack:** `Core Java` `OOP` `Data Structures` `CLI`
-
----
-
 ## 🤖 AI & Agentic Engineering
 
 I actively build **AI agents** to automate real engineering workflows — using Claude Code, Atlassian Rovo, agent skills, and prompt engineering. Three production agents I've created:
